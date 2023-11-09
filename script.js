@@ -134,9 +134,8 @@ let myChart = new Chart(ctx2, {
         scales: {
             y: {
                 beginAtZero: true
-            }
+                }
         }
-     
 }});
 
 
@@ -144,66 +143,6 @@ let myChart = new Chart(ctx2, {
 
 
 
-/*// Créez un canvas et un graphique une seule fois
-let canvas = document.createElement('canvas');
-canvas.width = 800;
-canvas.height = 800;
-let ctx = canvas.getContext('2d');
-
-// Récupérez le parent de h1 (le titre principal)
-let parentElement3 = document.querySelector('h1').parentNode;
-
-// Insérez le canvas avant le titre principal
-parentElement3.insertBefore(canvas, document.querySelector('h1'));
-
-let chart; // Déclarez la variable du graphique à l'extérieur de la fonction
-
-function fetchDataAndRenderChart() {
-   console.log('Fetching data...'); // Add this line
-    // Fetch data from the URL using AJAX
-    fetch('https://canvasjs.com/services/data/datapoints.php')
-        .then(response => response.json())
-        .then(data => {
-         console.log('Data fetched:', data); // Add this line
-            // Extract x and y values from the fetched data
-            const xValues = data.map(point => point[0]);
-            const yValues = data.map(point => point[1]);
-
-            // Mettez à jour les données du graphique existant
-            if (chart) {
-                chart.data.labels = xValues;
-                chart.data.datasets[0].data = yValues;
-                chart.update(); // Mettez à jour le graphique
-            } else {
-                // Créez le graphique à l'aide de Chart.js si le graphique n'existe pas encore
-                chart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: xValues,
-                        datasets: [{
-                            label: 'Data Points',
-                            data: yValues,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            x: {
-                                type: 'linear',
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
-            }
-        })
-        .catch(error => console.error('Error fetching data:', error));
-}
-
-// Fetch data and render chart every second
-setInterval(fetchDataAndRenderChart, 1000);*/
 let canvas = document.createElement('canvas');
 canvas.width = 800;
 canvas.height = 800;
@@ -219,12 +158,11 @@ function fetchDataAndRenderChart() {
     // Ajoutez un cachebuster unique à l'URL de l'API pour forcer le rafraîchissement des données
     const cachebuster = new Date().getTime();
     const apiUrl = `https://canvasjs.com/services/data/datapoints.php?cb=${cachebuster}`;
-
     // Fetch data from the URL using AJAX
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            console.log('Data fetched:', data);
+        console.log('Data fetched:', data);
 
             // Extract x and y values from the fetched data
             const xValues = data.map(point => point[0]);
