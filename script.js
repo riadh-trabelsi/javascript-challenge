@@ -141,7 +141,7 @@ let myChart = new Chart(ctx2, {
 
 
 
-
+/*
 
 let canvas = document.createElement('canvas');
 canvas.width = 800;
@@ -177,7 +177,7 @@ function fetchDataAndRenderChart() {
             } else {
                 // Créez le graphique à l'aide de Chart.js si le graphique n'existe pas encore
                 chart = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: xValues,
                         datasets: [{
@@ -206,9 +206,52 @@ function fetchDataAndRenderChart() {
 setInterval(() => {
     fetchDataAndRenderChart();
 }, 1000);
+*/
 
+function createChart() {
+    var dataPoints = [];
 
+    // Create a div for the chart
+    var chartContainer = document.createElement("div");
+    chartContainer.id = "chartContainer";
+    chartContainer.style.height = "300px";
+    chartContainer.style.width = "100%";
+    document.body.appendChild(chartContainer);
+    let parentElement3 = document.querySelector('h1').parentNode;
+    parentElement3.insertBefore(chartContainer, document.querySelector('h1'));
+    
+    var chart = new CanvasJS.Chart("chartContainer", {
+      
+        data: [{
+            type: "line",
+            dataPoints: dataPoints,
+        }]
+    });
 
+    // Initial data retrieval
+    $.getJSON("https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=10&type=json", function (data) {
+        $.each(data, function (key, value) {
+            dataPoints.push({ x: value[0], y: parseInt(value[1]) });
+        });
 
+        chart.render();
+        updateChart();
+    });
 
+    // Function to update the chart every second
+    function updateChart() {
+        $.getJSON("https://canvasjs.com/services/data/datapoints.php?xstart=" + (dataPoints.length + 1) + "&ystart=" + (dataPoints[dataPoints.length - 1].y) + "&length=1&type=json", function (data) {
+            $.each(data, function (key, value) {
+                dataPoints.push({
+                    x: parseInt(value[0]),
+                    y: parseInt(value[1])
+                });
+            });
+            chart.render();
+            setTimeout(function () { updateChart() }, 1000);
+        });
+    }
+}
 
+// Call the function to create the chart and container
+createChart();
